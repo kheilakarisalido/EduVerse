@@ -1,0 +1,37 @@
+Campus
+GET /api/campuses
+GET /api/campuses/{id}
+POST /api/campuses
+PUT /api/campuses/{id}
+DELETE /api/campuses/{id}
+
+User
+GET /api/users
+GET /api/users/{id}
+POST /api/users
+PUT /api/users/{id}
+DELETE /api/users/{id}
+
+Student
+GET /api/students
+POST /api/students
+PUT /api/students/{id}
+DELETE /api/students/{id}
+
+Admin
+GET /api/admins
+POST /api/admins
+PUT /api/admins/{id}
+DELETE /api/admins/{id}
+
+StudyGroup
+GET /api/groups
+POST /api/groups
+PUT /api/groups/{id}
+DELETE /api/groups/{id}
+
+Achievement
+GET /api/achievements
+POST /api/achievements
+PUT /api/achievements/{id}
+DELETE /api/achievements/{id}
