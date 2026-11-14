@@ -1,0 +1,69 @@
+package com.csit321g3.agenda.eduverse.service;
+ 
+import java.util.List;
+import java.util.NoSuchElementException;
+ 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+ 
+import com.csit321g3.agenda.eduverse.entity.Admin;
+import com.csit321g3.agenda.eduverse.repository.AdminRepository;
+ 
+@Service
+public class AdminService {
+ 
+    @Autowired
+    AdminRepository arepo;
+ 
+    // C
+    public Admin postAdmin(Admin admin) {
+        return arepo.save(admin);
+    }
+ 
+    // R all
+    public List<Admin> getAllAdmins() {
+        return arepo.findAll();
+    }
+ 
+    // R one
+    public Admin getAdminById(Long id) {
+        return arepo.findById(id).get();
+    }
+ 
+    // U
+    public Admin putAdmin(Long id, Admin newAdminDetails) {
+        Admin Admin = newAdminDetails;
+ 
+        try {
+            Admin = arepo.findById(id).get();
+ 
+            // Inherited User fields
+            Admin.setEmail(newAdminDetails.getEmail());
+            Admin.setPassword(newAdminDetails.getPassword());
+            Admin.setRole(newAdminDetails.getRole());
+            Admin.setCreatedAt(newAdminDetails.getCreatedAt());
+            Admin.setLastLoginTime(newAdminDetails.getLastLoginTime());
+            Admin.setCampus(newAdminDetails.getCampus());
+ 
+ 
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("Admin ID " + id + " not found.");
+        }
+ 
+        return arepo.save(Admin);
+    }
+ 
+    // D
+    public String deleteAdmin(Long id) {
+        String msg = "";
+ 
+        if (arepo.findById(id).isPresent()) {
+            arepo.deleteById(id);
+            msg = "Admin ID " + id + " successfully deleted.";
+        } else {
+            msg = "Admin ID " + id + " not found.";
+        }
+ 
+        return msg;
+    }
+}

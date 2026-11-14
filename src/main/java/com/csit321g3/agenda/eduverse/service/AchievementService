@@ -1,0 +1,66 @@
+package com.csit321g3.agenda.eduverse.service;
+ 
+import java.util.List;
+import java.util.NoSuchElementException;
+ 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+ 
+import com.csit321g3.agenda.eduverse.entity.Achievement;
+import com.csit321g3.agenda.eduverse.repository.AchievementRepository;
+ 
+@Service
+public class AchievementService {
+ 
+    @Autowired
+    AchievementRepository arepo;
+ 
+    // C
+    public Achievement postAchievement(Achievement achievement) {
+        return arepo.save(achievement);
+    }
+ 
+    // R all
+    public List<Achievement> getAllAchievements() {
+        return arepo.findAll();
+    }
+ 
+    // R one
+    public Achievement getAchievementById(Long id) {
+        return arepo.findById(id).get();
+    }
+ 
+    // U
+    public Achievement putAchievement(Long id, Achievement newAchievementDetails) {
+        Achievement achievement = newAchievementDetails;
+ 
+        try {
+            achievement = arepo.findById(id).get();
+ 
+            // Inherited User fields
+            achievement.setAchievementName(newAchievementDetails.getAchievementName());
+            achievement.setRewardCoins(newAchievementDetails.getRewardCoins());
+            achievement.setDescription(newAchievementDetails.getDescription());
+            achievement.setIcon(newAchievementDetails.getIcon());
+ 
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("Achievement ID " + id + " not found.");
+        }
+ 
+        return arepo.save(achievement);
+    }
+ 
+    // D
+    public String deleteAchievement(Long id) {
+        String msg = "";
+ 
+        if (arepo.findById(id).isPresent()) {
+            arepo.deleteById(id);
+            msg = "Achievement ID " + id + " successfully deleted.";
+        } else {
+            msg = "Achievement ID " + id + " not found.";
+        }
+ 
+        return msg;
+    }
+}

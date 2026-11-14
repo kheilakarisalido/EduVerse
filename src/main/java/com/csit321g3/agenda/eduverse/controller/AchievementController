@@ -1,0 +1,57 @@
+package com.csit321g3.agenda.eduverse.controller;
+ 
+import java.util.List;
+ 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+ 
+import com.csit321g3.agenda.eduverse.entity.Achievement;
+import com.csit321g3.agenda.eduverse.service.AchievementService;
+ 
+@RestController
+@RequestMapping(path = "/api/achievements")
+public class AchievementController {
+ 
+    @Autowired
+    AchievementService aserv;
+ 
+    // C
+    @PostMapping
+    public Achievement create(@RequestBody Achievement achievement) {
+        return aserv.postAchievement(achievement);
+    }
+ 
+    // R all
+    @GetMapping
+    public List<Achievement> getAll() {
+        return aserv.getAllAchievements();
+    }
+ 
+    // R one
+    @GetMapping("/{id}")
+    public Achievement getById(@PathVariable Long id) {
+        return aserv.getAchievementById(id);
+    }
+   
+    // U
+    @PutMapping("/{id}")
+    public Achievement update(
+            @PathVariable Long id,
+            @RequestBody Achievement achievement) {
+ 
+        return aserv.putAchievement(id, achievement);
+    }
+ 
+    // D
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable Long id) {
+        return aserv.deleteAchievement(id);
+    }
+}
